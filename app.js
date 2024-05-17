@@ -1,10 +1,12 @@
 // Weather App using OpenWeatherMap API
 
 // API key
+
 const apiKey = "a19d0e27b17434ce6471ea4f53a5a74a";
 let searchBtn = document.getElementById("searchBtn");
 let weatherBox = document.querySelector(".weather-box");
 let searchInput = document.getElementById("searchInput");
+let weatherimg=document.getElementById("weatherimg");
 
 function gettingData(cityName) {
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`)
@@ -20,12 +22,38 @@ function gettingData(cityName) {
            weatherBox.innerHTML = `
                <h2>${res.name}</h2></br>
                <p>${res.weather[0].description}</p></br></br>
-               <p>Main: ${res.weather[0].main}</p></br></br>
+               <p>${res.weather[0].main}</p></br></br>
                <p>Temperature: ${res.main.temp}°C</p></br></br>
                <p>Humidity: ${res.main.humidity}%</p></br></br>
                <p>Wind Speed: ${res.wind.speed} m/s</p></br></br>
                <p>Wind Degree: ${res.wind.deg}°</p></br></br>
            `;
+         
+           switch (res.weather[0].main) {
+            case 'Clear':
+              weatherimg.style.backgroundImage = "url('./assets/clearsky.jpg')";
+                break;
+            case 'Clouds':
+              weatherimg.style.backgroundImage = "url('./assets/clouds.jpg')";
+                break;
+            case 'Rain':
+              weatherimg.style.backgroundImage = "url('./assets/rain.jpg')";
+                break;
+            case 'Snow':
+              weatherimg.style.backgroundImage = "url('./assets/snow.jpg')";
+                break;
+            case 'Thunderstorm':
+              weatherimg.style.backgroundImage = "url('./assets/thunderstorm.jpg')";
+                break;
+                case 'broken clouds':
+              weatherimg.style.backgroundImage = "url('./assets/brokenclouds.jpg')";
+                break;
+                case 'fog':
+                  weatherimg.style.backgroundImage = "url('./assets/fog.jpg')";
+                    break;
+          
+        }
+
        })
        .catch((error) => {
            console.error(error);
@@ -37,7 +65,11 @@ searchBtn.addEventListener("click", function() {
     const cityName = searchInput.value; // Get the value from the input field
     if (!cityName)
          { 
-      alert("Enter any city name")
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Enter a City Name ",
+          });
          }
     else{
       gettingData(cityName);
@@ -46,22 +78,22 @@ searchBtn.addEventListener("click", function() {
 });
 
 
-// Initial call to gettingData function to show weather for default city
-gettingData("Karachi"); // You can set any default city here
 
-// Check if the Geolocation API is available
+
+gettingData("Karachi");
+
+
 if (navigator.geolocation) {
   // Get the current position
   navigator.geolocation.getCurrentPosition(function(position) {
-    // Get the latitude and longitude from the position object
+    // Get the latitude and longitude
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
 
-    // Do something with the latitude and longitude, like display it on a map or use it for other purposes
     console.log("Latitude: " + latitude + ", Longitude: " + longitude);
   });
 } else {
-  // Geolocation is not supported by this browser
+ 
   console.log("Geolocation is not supported by this browser.");
 }
 

@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -8,6 +9,15 @@
 body {
   background-color: #000000;
 }
+
+.text-div{
+   margin: 50px;
+}
+
+#hero{
+  display:flex;
+}
+
 .textdiv{
 
   color: #fff;
@@ -16,25 +26,25 @@ body {
 }
 
 div#weatherimg {
-  min-height: 29vh;
+  min-height: 67vh;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 70%;
-  width: 405px;
+  width: 391px;
   margin: auto;
 }
 
 .container {
-  position: relative;
+ 
   width: 440px;
-  height: 550px;
+ 
   border: 2px solid rgba(255, 255, 255, 0.2);
   background: black;
   border-radius: 16px;
   padding: 20px;
   margin: auto;
   color: white;
-  top: 25px;
+ 
 }
 
 .search-box {
